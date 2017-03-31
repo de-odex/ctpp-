@@ -1,0 +1,20 @@
+beatmap.DifficultyAttribute(_mods, CBeatmap::Aim)
+
+
+Aim
+(5.0 * max(1.0, smth/0.0049) - 4.0)**2.0/100000.0
+
+lenbonus multiplier
+0.95 + 0.4 * min(1.0, amountTotalHits/3000.0) + (log10(amountTotalHits/3000.0) * 0.5 if amountTotalHits > 3000 else 0.0)
+
+miss multiplier
+0.97 ** misses
+
+float beatmapMaxCombo = beatmap.DifficultyAttribute(_mods, CBeatmap::MaxCombo);
+	if(beatmapMaxCombo > 0)
+	{
+		multiplier
+			min((_maxCombo**0.8) / (beatmapMaxCombo**0.8), 1.0);
+	}
+
+
