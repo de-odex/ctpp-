@@ -1,20 +1,87 @@
+
+
+
 beatmap.DifficultyAttribute(_mods, CBeatmap::Aim)
 
 
-Aim
-(5.0 * max(1.0, smth/0.0049) - 4.0)**2.0/100000.0
+#Aim
+	multiplier
+	(5.0 * max(1.0, smth/0.0049) - 4.0)**2.0/100000.0
 
-lenbonus multiplier
-0.95 + 0.4 * min(1.0, amountTotalHits/3000.0) + (log10(amountTotalHits/3000.0) * 0.5 if amountTotalHits > 3000 else 0.0)
 
-miss multiplier
-0.97 ** misses
+#lenbonus 
+	multiplier
+	0.95 + 0.4 * min(1.0, amountTotalHits/3000.0) + (log10(amountTotalHits/3000.0) * 0.5 if amountTotalHits > 3000 else 0.0)
+
+
+#miss 
+	multiplier
+	0.97 ** misses
 
 float beatmapMaxCombo = beatmap.DifficultyAttribute(_mods, CBeatmap::MaxCombo);
 	if(beatmapMaxCombo > 0)
-	{
 		multiplier
-			min((_maxCombo**0.8) / (beatmapMaxCombo**0.8), 1.0);
-	}
+		min((_maxCombo**0.8) / (beatmapMaxCombo**0.8), 1.0);
 
 
+#AR
+	approachRate = beatmap.DifficultyAttribute(_mods, CBeatmap.AR)
+	approachRateFactor = 1.0
+	if approachRate > 9.0:
+		approachRateFactor += 0.1 * (approachRate - 9.0); # 10% for each AR above 9
+	elif approachRate < 8.0:
+		approachRateFactor += 0.025 * (8.0 - approachRate); # 2.5% for each AR below 8
+
+	multiplier
+	approachRateFactor
+
+
+#HD
+	if (_mods & EMods.Hidden) > 0:
+		# Hiddens gives nothing on max approach rate, more the lower it is
+		multiplier
+		1.05 + 0.075 * (10.0 - min(10.0, approachRate)); # 7.5% for each AR below 10
+
+
+#FL
+	if (_mods & EMods.Flashlight) > 0:
+		# Apply length bonus again if flashlight is on simply because it becomes a lot harder on longer maps.
+		multiplier
+		1.35f * lengthBonus
+
+
+#ACC
+# Scale the aim value with accuracy _slightly_
+	multiplier
+	Accuracy()**5.5
+
+
+#NF
+	multiplier
+	0.95
+
+
+def Accuracy():
+	if(TotalHits() == 0)
+		return 0;
+	return clamp(TotalSuccessfulHits() / TotalHits(), 0.0, 1.0);
+	#if v < hi:
+		#return max(v, hi)
+	#else:
+		#return min(v, lo)
+
+
+s32 CCatchTheBeatScore::TotalHits() const
+{
+	return _amount50 + _amount100 + _amount300 + _amountMiss + _amountKatu;
+}
+
+s32 CCatchTheBeatScore::TotalSuccessfulHits() const
+{
+	return _amount50 + _amount100 + _amount300;
+}
+
+s32 CCatchTheBeatScore::TotalComboHits() const
+{
+	return _amount300 + _amount100 + _amountMiss;
+}

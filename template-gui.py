@@ -1,9 +1,9 @@
 
-# ctpp! first prototype/
+# ctpp! first prototype
 import tkinter
 
 
-class SimpleAppTk(tkinter.Tk):
+class CtPP(tkinter.Tk):
 	"""Make an app window with tkinter."""
 
 	def __init__(self, parent):
@@ -49,7 +49,19 @@ class SimpleAppTk(tkinter.Tk):
 		self.entry.focus_set()
 		self.entry.selection_range(0, tkinter.END)
 
+
+def logic():
+	file = CtPP.entryVariable.get()
+	objectcount = 0
+
+	with open(file, 'r') as f:
+		for line in f:
+			if '[HitObjects]' in line:
+				for line in f:  # now you are at the lines you want
+					# do work
+					objectcount += 1
+
 if __name__ == "__main__":
-	app = SimpleAppTk(None)
+	app = CtPP(None)
 	app.title('ctpp!')
 	app.mainloop()

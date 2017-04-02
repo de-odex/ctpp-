@@ -1,0 +1,64 @@
+osu file format v9
+
+[General]
+AudioFilename: Leekspin.mp3
+AudioLeadIn: 1023
+PreviewTime: -1
+Countdown: 0
+SampleSet: Normal
+StackLeniency: 0.7
+Mode: 0
+LetterboxInBreaks: 1
+
+[Editor]
+DistanceSpacing: 1.2
+BeatDivisor: 4
+GridSize: 8
+
+[Metadata]
+Title:Ievan Polkka
+Artist:Loituma
+Creator:Loginer
+Version:SPINNER-MADNESS
+Source:
+Tags:
+
+[Difficulty]
+HPDrainRate:0
+CircleSize:5
+OverallDifficulty:0
+ApproachRate:0
+SliderMultiplier:1.4
+SliderTickRate:1
+
+[Events]
+//Background and Video events
+0,0,"Background.png"
+//Break Periods
+//Storyboard Layer 0 (Background)
+Sprite,Background,TopLeft,"Pedobear.png",150,480
+ M,0,-2976,-2276,150,480,150,295
+ P,0,-1776,-976,H
+ M,0,-976,-626,150,295,-200,295
+//Storyboard Layer 1 (Fail)
+//Storyboard Layer 2 (Pass)
+//Storyboard Layer 3 (Foreground)
+Sprite,Foreground,TopLeft,"Link.png",400,480
+ M,0,-2976,-2276,400,480,400,295
+ M,0,-976,-262,400,295,-314,295
+Sprite,Foreground,TopLeft,"OHSHI.png",640,480
+ M,0,-1476,,230,345,240,345
+ F,0,-1476,,0,100
+ F,0,-976,,100,0
+Sprite,Foreground,TopLeft,"Eat.png",240,480
+ M,0,26000,,240,480,240,295
+ M,0,27000,27500,240,295,240,480
+//Storyboard Sound Samples
+//Background Colour Transformations
+3,100,163,162,255
+
+[TimingPoints]
+4584,554.272517321016,4,1,0,70,1,0
+
+[HitObjects]
+256,192,149,12,4,26200
