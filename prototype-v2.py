@@ -3,12 +3,13 @@
 import tkinter
 import requests
 import math
+import osuapikey
 
 # window stuff
 window = tkinter.Tk()
 window.title("pp!catch")
 window.wm_iconbitmap('pp!catch.ico')
-window.geometry("250x300")
+window.geometry("250x400")
 window.resizable(False, False)
 window.grid()
 
@@ -35,23 +36,32 @@ def calculatepp():
 	modnames = {}
 
 	# request for star rating
-	print(btmp_idI)
 	beatmap_id = btmp_idI.get()
-	print(beatmap_id)
+	api_key = osuapikey.api_key
 	parameters = {
-		"k": "7ec7168b3a0b7bec07fe66e7bbe259a15bafc287",
+		"k": api_key,
 		"b": beatmap_id,
 		"m": 2,
 		"a": 1
 	}
+
 	osuresponse = requests.get("https://osu.ppy.sh/api/get_beatmaps", params=parameters)
 	osudata = osuresponse.json()
 	print(osudata)
 	stars = float(osudata[0]["difficultyrating"])
 	max_combo = int(osudata[0]["max_combo"])
-	max_player_combo = int(max_player_comboI.get()) if max_player_comboI is not None else 0
-	miss = int(missI.get()) if missI is not None else 0
-	acc = float(accI.get()) if accI is not None else 100
+	try:
+		max_player_combo = int(max_player_comboI.get()) if (max_player_comboI.get()) is not '' or int(max_player_comboI.get()) <= max_combo else max_combo
+	except:
+		max_player_combo = max_combo
+	try:
+		miss = int(missI.get()) if (missI.get()) is not '' or int(missI.get()) < max_combo else 0
+	except:
+		miss = 0
+	try:
+		acc = float(accI.get()) if (accI.get()) is not '' or float(accI.get()) < 0 else 100
+	except:
+		acc = float(100)
 	ar = float(osudata[0]["diff_approach"])
 
 	finalpp = pow(((5 * max(1, stars / 0.0049)) - 4), 2) / 100000
