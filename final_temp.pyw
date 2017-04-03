@@ -68,7 +68,9 @@ def calculatepp():
 
 	# mods
 	# if HD do: finalpp *= 1.05 + 0.075 * (10.0 - min(10.0, approachRate))
-	ppdisplaying(finalpp)
+
+	# end
+	ppdisplaying(round(finalpp, 2))
 
 # end
 

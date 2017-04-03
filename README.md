@@ -1,11 +1,12 @@
-# ctpp!
-ctpp! is a pp calculator for the osu!catch gamemode. Uses the beatmap's .osu file to calculate.
+# pp!catch
+pp!catch is a pp calculator for the osu!catch gamemode. Uses the beatmap's ID (not the beatmapset) to calculate.
 
-Based on formulas from [osu!performance](https://github.com/ppy/osu-performance) and file reading from [oppai](https://github.com/Francesco149/oppai)
+Based on formulas from [osu!performance](https://github.com/ppy/osu-performance) and the [api](https://github.com/ppy/osu-api/wiki)
 
 ## Quickstart
-Just run the .py file to use the calculator.
+Just run the .pyw file to use the calculator.
 
-
-
-WIP
+## Developing
+* mods support
+* search by name (maybe not >.>)
+* better UI
