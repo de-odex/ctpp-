@@ -7,9 +7,10 @@ Based on formulas from [osu!performance](https://github.com/ppy/osu-performance)
 Just run the .pyw file to use the calculator.
 
 ## Developing
+Bold is priority.
 * mods support
 * search by name (maybe not >.>)
-* better UI
+* **better UI**  
 * check where in the ranks the play will go *WILL NOTIFY USER*
 
 ## Notes for me and other devs

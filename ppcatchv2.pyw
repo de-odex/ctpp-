@@ -3,22 +3,28 @@
 import tkinter
 import requests
 import math
-import osuapikey
+import configparser
+# import os.path
 
 # window stuff
 window = tkinter.Tk()
 window.title("pp!catch")
 window.wm_iconbitmap('pp!catch.ico')
-window.geometry("300x400")
+
+windowh = 400
+windoww = 300
+
+window.minsize(width=windoww, height=windowh)
+window.maxsize(width=windoww, height=windowh)
 window.resizable(False, False)
 window.grid()
 window.grid_columnconfigure(0, weight=1)
-window.grid_rowconfigure(0, weight=1)
 window.grid_columnconfigure(1, weight=1)
-
+window.grid_columnconfigure(2, weight=1)
 
 modnames = None
 stars = None
+
 # GUI functions
 filenm = None
 
@@ -34,12 +40,23 @@ def ppdisplaying(pp):
 
 # logic function
 
-def get_api_data():
-	# request for star rating
+def configuration():
+	configfile = configparser.ConfigParser()
+	configfile["Default"] = {'APIKey': 0, 'username': ""}
+	confwin = tkinter.Toplevel(window)
+	confwin.title("Settings")
+	confwin.wm_iconbitmap('pp!catch.ico')
+	confwin.geometry("200x300")
+	confwin.resizable(False, False)
+	tester = tkinter.Label(confwin, text="angery")
+	tester.pack(fill="both", expand=1)
+
+
+def get_api_data(api_key):
+	# request for data
 	beatmap_id = btmp_idI.get()
 	if beatmap_id == "":
 		ppdisplay.configure(text="Invalid beatmap ID.\n Click the difficulty name and try again")
-	api_key = osuapikey.api_key
 	parameters = {
 		"k": api_key,
 		"b": beatmap_id,
@@ -49,6 +66,7 @@ def get_api_data():
 
 	osuresponse = requests.get("https://osu.ppy.sh/api/get_beatmaps", params=parameters)
 	return osuresponse.json()
+
 
 def calculatepp():
 	global modnames, btmp_id, stars, max_player_comboI, missI, accI
@@ -110,63 +128,67 @@ def calculatepp():
 
 # end
 
-
+# icon
 icon = tkinter.PhotoImage(file="pp!catch.png")
 iconlabel = tkinter.Label(window, image=icon)
-iconlabel.grid(column=0, row=0, columnspan=2)
+iconlabel.grid(columnspan=3)
+
+# config button
+configurate = tkinter.Button(window, text="Configuration", command=configuration)
+configurate.grid(columnspan=3)
 
 # beatmap stuff
 titleinfo = tkinter.Label(window, text="Beatmap ID:")
-titleinfo.grid(column=0, row=1, columnspan=2)
+titleinfo.grid(columnspan=3)
 
 btmp_idI = tkinter.StringVar()
 btmp_id = tkinter.Entry(window, textvariable=btmp_idI)
-btmp_id.grid(column=0, row=2, columnspan=2)
+btmp_id.grid(columnspan=3)
 
 # max combo, acc, miss
 combo_info = tkinter.Label(window, text="Combo (Default: Max):")
-combo_info.grid(column=0, row=3, columnspan=2)
+combo_info.grid(columnspan=3)
 
 max_player_comboI = tkinter.StringVar()
 combo = tkinter.Entry(window, textvariable=max_player_comboI)
-combo.grid(column=0, row=4, columnspan=2)
+combo.grid(columnspan=3)
 
 miss_info = tkinter.Label(window, text="Misses (Default: 0):")
-miss_info.grid(column=0, row=5, columnspan=2)
+miss_info.grid(columnspan=3)
 
 missI = tkinter.StringVar()
 miss = tkinter.Entry(window, textvariable=missI)
-miss.grid(column=0, row=6, columnspan=2)
+miss.grid(columnspan=3)
 
 acc_info = tkinter.Label(window, text="Accuracy (Default: Perfect):")
-acc_info.grid(column=0, row=7, columnspan=2)
+acc_info.grid(columnspan=3)
 
 accI = tkinter.StringVar()
 acc = tkinter.Entry(window, textvariable=accI)
-acc.grid(column=0, row=8, columnspan=2)
+acc.grid(columnspan=3)
 
 # mods
 HD = tkinter.IntVar()
-tkinter.Checkbutton(window, text="HD", variable=HD).grid(column=0, row=9)
+tkinter.Checkbutton(window, text="HD", variable=HD).grid(column=0, sticky='w')
 
 FL = tkinter.IntVar()
-tkinter.Checkbutton(window, text="FL", variable=FL).grid(column=1, row=9)
+tkinter.Checkbutton(window, text="FL", variable=FL).grid(column=1, sticky='w')
 
 NF = tkinter.IntVar()
-tkinter.Checkbutton(window, text="NF", variable=NF).grid(column=0, row=10)
+tkinter.Checkbutton(window, text="NF", variable=NF).grid(column=2, sticky='w')
 
 DT = tkinter.IntVar()
-tkinter.Checkbutton(window, text="DT (WIP)", variable=DT).grid(column=1, row=10)
+tkinter.Checkbutton(window, text="DT (WIP)", variable=DT).grid(column=0, sticky='w')
 
 HR = tkinter.IntVar()
-tkinter.Checkbutton(window, text="HR (WIP)", variable=HR).grid(column=0, row=11)
+tkinter.Checkbutton(window, text="HR (WIP)", variable=HR).grid(column=1, sticky='w')
 
 # buttotanical!
 calc = tkinter.Button(window, text="Calculate pp!", command=calculatepp)
-calc.grid(column=0, row=12, columnspan=2)
+calc.grid(columnspan=3)
 
 ppdisplay = tkinter.Label(window, text="")
-ppdisplay.grid(column=0, row=13, columnspan=2, rowspan=3)
+ppdisplay.grid(columnspan=3, rowspan=3)
 
 # END OF MAIN CODE
 
