@@ -34,11 +34,7 @@ def ppdisplaying(pp):
 
 # logic function
 
-
-def calculatepp():
-	global modnames, btmp_id, stars, max_player_comboI, missI, accI
-	modnames = {}
-
+def get_api_data():
 	# request for star rating
 	beatmap_id = btmp_idI.get()
 	if beatmap_id == "":
@@ -52,7 +48,14 @@ def calculatepp():
 	}
 
 	osuresponse = requests.get("https://osu.ppy.sh/api/get_beatmaps", params=parameters)
-	osudata = osuresponse.json()
+	return osuresponse.json()
+
+def calculatepp():
+	global modnames, btmp_id, stars, max_player_comboI, missI, accI
+	modnames = {}
+
+	# var setting
+	osudata = get_api_data()
 	stars = float(osudata[0]["difficultyrating"])
 	max_combo = int(osudata[0]["max_combo"])
 	try:
