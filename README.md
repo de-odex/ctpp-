@@ -10,3 +10,9 @@ Just run the .pyw file to use the calculator.
 * mods support
 * search by name (maybe not >.>)
 * better UI
+* check where in the ranks the play will go *WILL NOTIFY USER*
+
+## Notes for me and other devs
+* Developing 4: 
+- use a new tkinter.Tk() to make this notification.
+- api/get_user_best?k=&u=&m=2&limit=100 and http://effbot.org/tkinterbook/tkinter-dialog-windows.htm
