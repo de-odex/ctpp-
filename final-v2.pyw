@@ -64,7 +64,7 @@ def calculatepp():
 	except:
 		max_player_combo = max_combo - miss
 	try:
-		acc = float(accI.get()) if float(accI.get()) < 0 else 100
+		acc = float(accI.get()) if float(accI.get()) >= 0 and float(accI.get()) <= 100 else 100
 	except:
 		acc = float(100)
 	ar = float(osudata[0]["diff_approach"])
