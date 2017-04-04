@@ -16,3 +16,4 @@ Just run the .pyw file to use the calculator.
 * Developing 4: 
 - use a new tkinter.Tk() to make this notification.
 - api/get_user_best?k=&u=&m=2&limit=100 and http://effbot.org/tkinterbook/tkinter-dialog-windows.htm
+- configparser!!
